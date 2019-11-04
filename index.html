@@ -1,208 +1,125 @@
-<!doctype HTML>
+<!DOCTYPE html>
 <html>
-    <head>
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <script src="https://jeromeetienne.github.io/AR.js/three.js/examples/vendor/three.js/build/three.min.js"></script>
-    <script src="https://jeromeetienne.github.io/AR.js/three.js/examples/vendor/three.js/examples/js/libs/stats.min.js"></script>
-    <script src="https://jeromeetienne.github.io/AR.js/three.js/build/ar.js"></script>
-        <script>
-        THREEx.ArToolkitContext.baseURL = 'https://rawgit.com/jeromeetienne/ar.js/master/three.js/'
-        </script>
+	<head>
 
-    </head>
+    <!--
+    AR.js workshop
+    Author: Matt Nutsch
+    Date: 6-20-2018
+    Description: This is sample code for a workshop on developing an AR.js app.
+    Notes:
+    This code is based in part on Jerome Etienne's examples of AR.js at: https://github.com/jeromeetienne/AR.js/tree/master/aframe
+    It is also based in part on the AFrame documentation, available at: https://aframe.io/docs
 
-<body style='margin : 0px; overflow: hidden;' cz-shortcut-listen="true">
-    <div style="position : absolute; top : 10px; width : 100%; z-index : 1;">
-        <a href="https://github.com/jeromeetienne/AR.js/" target="_blank">AR.JS</a>
-        "- Three.js mobile performance"
-        <br>
-    </div>
-    <script>
-    
-        //////////////////////////////////////////////////////////////////////////////////
-        //		Init
-        //////////////////////////////////////////////////////////////////////////////////
+    Go to this URL to run this code in a mobile web browser: https://mnutsch.github.io/arjs_workshop/start/index.html
+    Download and print this image for the AR target marker: https://github.com/mnutsch/mnutsch.github.io/raw/master/arjs_workshop/start/Hiro%20pattern%20with%20border.pdf
+    -->
 
-        // init renderer
-        var renderer = new THREE.WebGLRenderer({
-            // antialias	: true,
-            alpha: true
-        });
-        renderer.setClearColor(new THREE.Color('lightgrey'), 0)
-        // renderer.setPixelRatio( 1/2 );
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.domElement.style.position = 'absolute'
-        renderer.domElement.style.top = '0px'
-        renderer.domElement.style.left = '0px'
-        document.body.appendChild(renderer.domElement);
+    <!-- include a-frame -->
+    <script src="https://mnutsch.github.io/arjs_workshop/start/vendor/aframe/build/aframe.min.js"></script>
 
-        // array of functions for the rendering loop
-        var onRenderFcts = [];
+    <!-- include ar.js for aframe -->
+    <script src='https://mnutsch.github.io/arjs_workshop/start/vendor/arjs/build/aframe-ar.js'></script>
+    <script>ARjs.Context.baseURL = 'https://mnutsch.github.io/arjs_workshop/start/vendor/three.js/'</script>
+    <!-- Note: the above libraries are included with absolute URL's, because Github.io seems to prefer those. Change them to relative URL's -->
 
-        // init scene and camera
-        var scene = new THREE.Scene();
+    <script>		
+      //wait until the page loads to perform the following
+          window.onload = function () 
+          {
 
-        //////////////////////////////////////////////////////////////////////////////////
-        //		Initialize a basic camera
-        //////////////////////////////////////////////////////////////////////////////////
+            var intervalLength = 20; //determines the speed of the animation (milliseconds to wait between ticks)
 
-        // Create a camera
-        var camera = new THREE.Camera();
-        scene.add(camera);
+            //define the scene, for ease of interacting with it
+            var scene = document.querySelector('a-scene');       
 
-        ////////////////////////////////////////////////////////////////////////////////
-        //          handle arToolkitSource
-        ////////////////////////////////////////////////////////////////////////////////
+            //ADD JAVASCRIPT CODE HERE...
 
-        var arToolkitSource = new THREEx.ArToolkitSource({
-            // to read from the webcam
-            sourceType: 'webcam',
+            //Timer for animations
+            setInterval(function()
+            {
 
-            // to read from an image
-            // sourceType : 'image',
-            // sourceUrl : THREEx.ArToolkitContext.baseURL + '../data/images/img.jpg',
+              //ADD CODE HERE TO DO THINGS...
+              
+            }, intervalLength);
 
-            // to read from a video
-            // sourceType : 'video',
-            // sourceUrl : THREEx.ArToolkitContext.baseURL + '../data/videos/headtracking.mp4',
-        })
-
-        arToolkitSource.init(function onReady() {
-            onResize()
-        })
-
-        // handle resize
-        window.addEventListener('resize', function () {
-            onResize()
-        })
-        function onResize() {
-            arToolkitSource.onResizeElement()
-            arToolkitSource.copyElementSizeTo(renderer.domElement)
-            if (arToolkitContext.arController !== null) {
-                arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas)
-            }
-        }
-        ////////////////////////////////////////////////////////////////////////////////
-        //          initialize arToolkitContext
-        ////////////////////////////////////////////////////////////////////////////////
-
-
-        // create atToolkitContext
-        var arToolkitContext = new THREEx.ArToolkitContext({
-            cameraParametersUrl: THREEx.ArToolkitContext.baseURL + '../data/data/camera_para.dat',
-            detectionMode: 'mono',
-            maxDetectionRate: 30,
-            canvasWidth: 80 * 3,
-            canvasHeight: 60 * 3,
-        })
-        // initialize it
-        arToolkitContext.init(function onCompleted() {
-            // copy projection matrix to camera
-            camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
-        })
-
-        // update artoolkit on every frame
-        onRenderFcts.push(function () {
-            if (arToolkitSource.ready === false) return
-
-            arToolkitContext.update(arToolkitSource.domElement)
-        })
-
-
-        ////////////////////////////////////////////////////////////////////////////////
-        //          Create a ArMarkerControls
-        ////////////////////////////////////////////////////////////////////////////////
-
-        var markerRoot = new THREE.Group
-        scene.add(markerRoot)
-        var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
-            type: 'pattern',
-            patternUrl: THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro'
-            // patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji'
-        })
-
-        // build a smoothedControls
-        var smoothedRoot = new THREE.Group()
-        scene.add(smoothedRoot)
-        var smoothedControls = new THREEx.ArSmoothedControls(smoothedRoot, {
-            lerpPosition: 0.4,
-            lerpQuaternion: 0.3,
-            lerpScale: 1,
-        })
-        onRenderFcts.push(function (delta) {
-            smoothedControls.update(markerRoot)
-        })
-        //////////////////////////////////////////////////////////////////////////////////
-        //		add an object in the scene
-        //////////////////////////////////////////////////////////////////////////////////
-
-        var arWorldRoot = smoothedRoot
-
-        // add a torus knot
-        var geometry = new THREE.BoxGeometry(1, 1, 1);
-        var material = new THREE.MeshNormalMaterial({
-            transparent: true,
-            opacity: 0.5,
-            side: THREE.DoubleSide
-        });
-        var mesh = new THREE.Mesh(geometry, material);
-        mesh.position.y = geometry.parameters.height / 2
-        arWorldRoot.add(mesh);
-
-        var geometry = new THREE.TorusKnotGeometry(0.3, 0.1, 64, 16);
-        var material = new THREE.MeshNormalMaterial();
-        var mesh = new THREE.Mesh(geometry, material);
-        mesh.position.y = 0.5
-        arWorldRoot.add(mesh);
-
-        onRenderFcts.push(function () {
-            mesh.rotation.x += 0.1
-        })
-
-        //////////////////////////////////////////////////////////////////////////////////
-        //		render the whole thing on the page
-        //////////////////////////////////////////////////////////////////////////////////
-        var stats = new Stats();
-        document.body.appendChild(stats.dom);
-        // render the scene
-        onRenderFcts.push(function () {
-            renderer.render(scene, camera);
-            stats.update();
-        })
-
-        // run the rendering loop
-        var lastTimeMsec = null
-        requestAnimationFrame(function animate(nowMsec) {
-            // keep looping
-            requestAnimationFrame(animate);
-            // measure time
-            lastTimeMsec = lastTimeMsec || nowMsec - 1000 / 60
-            var deltaMsec = Math.min(200, nowMsec - lastTimeMsec)
-            lastTimeMsec = nowMsec
-            // call each update function
-            onRenderFcts.forEach(function (onRenderFct) {
-                onRenderFct(deltaMsec / 1000, nowMsec / 1000)
-            })
-        })
+          }
     </script>
 
-    <canvas width="346" height="758" style="width: 1010.67px; height: 758px; position: absolute; top: 0px; left: 0px; margin-left: -332px; margin-top: 0px;"></canvas>
-    <div style="position: fixed; top: 0px; left: 0px; cursor: pointer; opacity: 0.9; z-index: 10000;">
-        <canvas width="160" height="96" style="width: 80px; height: 48px; display: block;"></canvas>
-        <canvas width="160" height="96" style="width: 80px; height: 48px; display: none;"></canvas>
-        <canvas width="160" height="96" style="width: 80px; height: 48px; display: none;"></canvas>
-    </div>
-    <video autoplay="" muted="" playsinline="" id="arjs-video" style="width: 1010.67px; height: 758px; position: absolute; top: 0px; left: 0px; z-index: -2; margin-left: -332.333px; margin-top: 0px;"></video>
-</body>
-</html>
+  </head>
 
-<!--
+  <!-- start the body of your page -->
+  <body style='margin : 0px; overflow: hidden;'>
+    <!-- add some info at the top of the page -->
+    <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1; color: white;'>
+      Instructions:<br/>
+      Point your camera at the target marker.
+    </div>    
 
-    <a-scene embedded arjs>
-        <a-marker preset="hiro">
-            <a-box position='0 0.5 0' material='color: yellow;'></a-box>
-        </a-marker>
-        <a-entity camera></a-entity>
+    <!-- Define your 3d scene and enabled ar.js -->
+    <a-scene debug embedded arjs='trackingMethod: best; debugUIEnabled: false;'>
+
+      <!-- Declare assets for use in the scene. -->
+      <a-assets timeout="1000">
+        <!-- Declare assets here. These are things like images or 3D models. -->    
+        
+        <!-- Example of how to declare a 3D model asset. -->
+        <!--<a-asset-item id="3DModel-obj" src="3Dmodel.obj"></a-asset-item preload="auto">-->
+        <!-- Example of how to declare a skin for a 3D model asset. -->
+        <!--<a-asset-item id="3DModel-mtl" src="3DModel.mtl"></a-asset-item>-->
+      
+      </a-assets>
+
+      <!-- Create a anchor to attach your augmented reality -->
+      <a-anchor hit-testing-enabled='true'>
+
+        <!-- Add your augmented reality items here -->
+
+        <!-- example of basic text in 3D -->
+        <!-- see: https://github.com/aframevr/aframe/blob/master/docs/components/text.md -->
+        <!--<a-entity id="basicText" position='0 0 0' scale='1 1 1' color='red' text='value: Hello World;'></a-entity>-->
+
+        <!-- example of a basic plane. -->
+        <!-- see: https://aframe.io/docs/0.8.0 -->
+        <!--<a-plane color="blue" height="1" width="1" rotation="-90 0 0"></a-plane>-->
+
+        <!-- example of text fit onto a plane -->
+        <!--
+        <a-plane
+        id = "helloWorldPlane"
+        geometry="primitive: plane; width: 1; height: 1; height: auto"
+        material="opacity: 0.5; color: white;"
+        position='0 0.25 3'>
+          <a-entity id="planeText" scale='2 2 2' text="value: Hello World;" align-"center"></a-entity>
+        </a-plane>
+        -->
+
+        <!-- Basic Box -->             
+        <!-- see: https://aframe.io/docs/0.8.0 -->
+        <a-box id="myBox" rotation="0 0 0" position='0 0.5 0' depth="1" height="1" width="1" material='opacity: 0.5; side:double; color:blue;'></a-box>
+        
+        <!-- Basic Sphere --> 
+        <!-- see: https://aframe.io/docs/0.8.0/primitives/a-sphere.html -->
+        <!--<a-sphere id="mySphere" position='0 0 0' color="yellow" radius="0.05"></a-sphere>-->
+
+        <!-- 3D Model example -->
+        <!-- see: https://aframe.io/docs/0.8.0/primitives/a-obj-model.html -->
+        <!--<a-obj-model id="my3DModel" src="#3DModel-obj" position="0 0 0" rotation="0 0 0" scale=".1 .1 .1" material="opacity: 0.9; side:double; color: orange;"></a-obj-model>-->
+        <!-- 3D Model example with skin -->
+        <!--<a-obj-model id="my3DModel" src="#3DModel-obj" mtl="#3DModel-mtl" position="0 0 0" rotation="0 0 0" scale="1 1 1" material="opacity: 1.0; side:double;"></a-obj-model>-->
+        
+      </a-anchor>
+
+      <!-- Define a static camera -->
+      <a-camera-static/>
+
     </a-scene>
 
--->
+    <!-- add some info at the bottom left of the page -->
+    <div >
+      <span id="myText" style='z-index: 1; color: white; position: fixed; left: 50px; bottom: 10px;'>Add some text here.</span>
+    </div>   
+
+  </body>
+
+</html>
