@@ -2,74 +2,19 @@
 <html>
 
 <head>
-    <style>
-    #display-Img{
-         -webkit-animation: NAME-YOUR-ANIMATION 5s infinite; /* Safari 4+ */
-  -moz-animation:    NAME-YOUR-ANIMATION 5s infinite; /* Fx 5+ */
-  -o-animation:      NAME-YOUR-ANIMATION 5s infinite; /* Opera 12+ */
-    animation:         NAME-YOUR-ANIMATION 5s infinite; 
-    }
-    @keyframes NAME-YOUR-ANIMATION {
-        0% { opacity : 0;}
-        100% {opacity: 1;}
-    }
-    
-    </style>
-    <!--
-    AR.js workshop
-    Author: Matt Nutsch
-    Date: 6-20-2018
-    Description: This is sample code for a workshop on developing an AR.js app.
-    Notes:
-    This code is based in part on Jerome Etienne's examples of AR.js at: https://github.com/jeromeetienne/AR.js/tree/master/aframe
-    It is also based in part on the AFrame documentation, available at: https://aframe.io/docs
 
-    Go to this URL to run this code in a mobile web browser: https://mnutsch.github.io/arjs_workshop/start/index.html
-    Download and print this image for the AR target marker: https://github.com/mnutsch/mnutsch.github.io/raw/master/arjs_workshop/start/Hiro%20pattern%20with%20border.pdf
-    -->
 
-    <!-- include a-frame -->
     <script src="https://mnutsch.github.io/arjs_workshop/start/vendor/aframe/build/aframe.min.js"></script>
 
-    <!-- include ar.js for aframe -->
     <script src='https://mnutsch.github.io/arjs_workshop/start/vendor/arjs/build/aframe-ar.js'></script>
     <script>ARjs.Context.baseURL = 'https://mnutsch.github.io/arjs_workshop/start/vendor/three.js/'</script>
-    <!-- Note: the above libraries are included with absolute URL's, because Github.io seems to prefer those. Change them to relative URL's -->
 
-    <script>
-        //wait until the page loads to perform the following
-        window.onload = function () {
-
-            var intervalLength = 20; //determines the speed of the animation (milliseconds to wait between ticks)
-
-            //define the scene, for ease of interacting with it
-            var scene = document.querySelector('a-scene');
-
-            //ADD JAVASCRIPT CODE HERE...
-
-            //Timer for animations
-            setInterval(function () {
-
-                //ADD CODE HERE TO DO THINGS...
-
-            }, intervalLength);
-
-        }
-/*
-        let box = document.querySelector('a-box');
-        box.addEventListener('click', function () {
-            box.setAttribute('color', 'green');
-        });
-*/
-        
-    </script>
 
 </head>
 
-<!-- start the body of your page -->
 
 <body style='margin : 0px; overflow: hidden;'>
-    <!-- add some info at the top of the page -->
+
     <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1; color: white;'>
         Instructions:<br />
         Point your camera at the target marker.
@@ -78,19 +23,7 @@
     <!-- Define your 3d scene and enabled ar.js -->
     <a-scene debug embedded arjs='trackingMethod: best; debugUIEnabled: false;'>
 
-        <!-- Declare assets for use in the scene. -->
-        <a-assets timeout="1000">
-            <!-- Declare assets here. These are things like images or 3D models. -->
 
-            <!-- Example of how to declare a 3D model asset. -->
-            <!--<a-asset-item id="3DModel-obj" src="3Dmodel.obj"></a-asset-item preload="auto">-->
-            <!-- Example of how to declare a skin for a 3D model asset. -->
-            <!--<a-asset-item id="3DModel-mtl" src="3DModel.mtl"></a-asset-item>-->
-
-        </a-assets>
-        
-        <!-- Create a anchor to attach your augmented reality -->
-        
         <a-anchor hit-testing-enabled='true'>
 
             <!-- Add your augmented reality items here -->
@@ -155,7 +88,7 @@
                     from ="0"
                     to="1"></a-animation>
                 </a-image>
-                <a-video src="./assets/videoGame.mp4" width = "2" height = "2" position="-3.5 -1 0"></a-video>
+                <a-video src="./assets/videoGame.mp4"  autoplay loop="true" width = "2" height = "2" position="-3.5 -1 0"></a-video>
                 </a-entity>
         </a-anchor>
         <!-- Define a static camera -->
