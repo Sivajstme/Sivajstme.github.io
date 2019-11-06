@@ -2,7 +2,19 @@
 <html>
 
 <head>
-
+    <style>
+    #display-Img{
+         -webkit-animation: NAME-YOUR-ANIMATION 5s infinite; /* Safari 4+ */
+  -moz-animation:    NAME-YOUR-ANIMATION 5s infinite; /* Fx 5+ */
+  -o-animation:      NAME-YOUR-ANIMATION 5s infinite; /* Opera 12+ */
+    animation:         NAME-YOUR-ANIMATION 5s infinite; 
+    }
+    @keyframes NAME-YOUR-ANIMATION {
+        0% { opacity : 0;}
+        100% {opacity: 1;}
+    }
+    
+    </style>
     <!--
     AR.js workshop
     Author: Matt Nutsch
@@ -49,10 +61,7 @@
             box.setAttribute('color', 'green');
         });
 */
-        let img =  document.querySelector('a-image');
-        setInterval(() => {
-            img.setAttribute('visible', true);
-        }, 3000);
+        
     </script>
 
 </head>
@@ -79,8 +88,9 @@
             <!--<a-asset-item id="3DModel-mtl" src="3DModel.mtl"></a-asset-item>-->
 
         </a-assets>
-
+        
         <!-- Create a anchor to attach your augmented reality -->
+        
         <a-anchor hit-testing-enabled='true'>
 
             <!-- Add your augmented reality items here -->
@@ -117,40 +127,42 @@
             <!-- see: https://aframe.io/docs/0.8.0/primitives/a-obj-model.html -->
             <!--<a-obj-model id="my3DModel" src="#3DModel-obj" position="0 0 0" rotation="0 0 0" scale=".1 .1 .1" material="opacity: 0.9; side:double; color: orange;"></a-obj-model>-->
             <!-- 3D Model example with skin -->
-            <!--<a-obj-model id="my3DModel" src="#3DModel-obj" mtl="#3DModel-mtl" position="0 0 0" rotation="0 0 0" scale="1 1 1" material="opacity: 1.0; side:double;"></a-obj-model>-->
-                <a-sphere position="0 0 0" color="green" radius= "0.25">
+            <!--<a-obj-model id="my3DModel" src="#3DModel-obj" mtl="#3DModel-mtl" position="0 0 0" rotation="0 0 0" scale="1 1 1" material="opacity: 1.0; side:double;"></a-obj-model>
+                <a-sphere 
+                id="animated-model" scale="2" position="-2 1 0" color="white" radius= "0.15">
                     <a-animation
                         attribute = "color"
                         dur = "10000"
-                        from = "green"
-                        to = "blue"
+                        from = "white"
+                        to = "red"
                         repeat = "indefinite"></a-animation>
 
+<a-animation attribute="position" dur="4000" from="-1.5 0.8 0" to="-3.5 0.8 0"></a-animation>
 
-                </a-sphere>
-                <a-plane src = "./assets/texture.jpg" height="1" width="2" color="grey" position="-2 1 0">
-                    <a-text value="\n\n Siva Sunkara  - Graduate Developer \n\n shivajstme@gamil.com \n\n Ph: 0468357759\n\n Melbourne AU" 
-                            position= "-0.9 0.2 0" 
+                </a-sphere>-->
+            
+            <a-plane src = "./assets/texture.jpg" height="1" width="2" color="grey" position="-2 1 0">
+                    <a-text value="\n\n Siva Sunkara  - Graduate Developer \n\n(WebVR and WebAR) \n\n shivajstme@gamil.com \n\n Ph: 0468357759\n\n Melbourne AU" 
+                            position= "-0.9 0.1 0" 
                             height="1"
                             width = "2"
                             color="white"> </a-text>
                 </a-plane>
-                <a-image id="display-Img" visible="false" src = "./assets/img.JPG" width="1" height="1.5" position="-3.5 0.5 0"></a-image>
-
-
+                <a-image id="display-Img" src = "./assets/img.JPG" width="1" height="1.5" position="-3.5 0.8 0">
+                <a-animation
+                    attribute="opacity"
+                    dur="4000"
+                    from ="0"
+                    to="1"></a-animation>
+                </a-image>
+                <a-video src="./assets/videoGame.mp4" width = "2" height = "2" position="-3.5 -1 0"></a-video>
+                </a-entity>
         </a-anchor>
-
         <!-- Define a static camera -->
         <a-camera-static />
 
     </a-scene>
-
     <!-- add some info at the bottom left of the page -->
-    <div>
-        <span id="myText" style='z-index: 1; color: white; position: fixed; left: 50px; bottom: 10px;'>Add some text
-            here.</span>
-    </div>
-
 </body>
 
 </html>
