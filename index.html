@@ -43,11 +43,16 @@
             }, intervalLength);
 
         }
-
+/*
         let box = document.querySelector('a-box');
         box.addEventListener('click', function () {
             box.setAttribute('color', 'green');
         });
+*/
+        let img =  document.querySelector('a-image');
+        setInterval(() => {
+            img.setAttribute('visible', true);
+        }, 3000);
     </script>
 
 </head>
@@ -123,7 +128,14 @@
 
 
                 </a-sphere>
-                <a-plane height="3" width="3" color="grey" position="-0.5 0 -0.5"></a-plane>
+                <a-plane src = "./assets/texture.jpg" height="1" width="2" color="grey" position="-2 1 0">
+                    <a-text value="\n\n Siva Sunkara  - Graduate Developer \n\n shivajstme@gamil.com \n\n Ph: 0468357759\n\n Melbourne AU" 
+                            position= "-0.9 0.2 0" 
+                            height="1"
+                            width = "2"
+                            color="white"> </a-text>
+                </a-plane>
+                <a-image id="display-Img" visible="false" src = "./assets/img.JPG" width="1" height="1.5" position="-3.5 0.5 0"></a-image>
 
 
         </a-anchor>
