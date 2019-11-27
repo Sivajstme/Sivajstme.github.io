@@ -29,11 +29,11 @@
 
         }
 /*
-                let box = document.querySelector('a-box');
-                box.addEventListener('click', function () {
-                    box.setAttribute('color', 'green');
-                });
-*/
+                        let box = document.querySelector('a-box');
+                        box.addEventListener('click', function () {
+                            box.setAttribute('color', 'green');
+                        });
+        */
 
     </script>
 
@@ -107,33 +107,21 @@
 
                             </a-sphere>-->
 
-            <a-plane src="./assets/texture.jpg" height="1" width="2" color="grey" position="0.3 0.5 0">
+            <a-plane src="./assets/texture.jpg" height="1" width="2" color="grey" position="0.3 0.5 0" rotation="-90 0 0">
                 <a-text value="\n\n Siva Sunkara  - Graduate Developer \n\n(WebVR and WebAR) \n\n shivajstme@gamil.com \n\n Ph: 0468357759\n\n Melbourne AU"
-                        position="-1 0.1 0"
-                        height="1"
-                        width="2"
-                        color="white"></a-text>
+                    position="-1 0.1 0" height="1" width="2" color="white"></a-text>
             </a-plane>
             <a-image src="./assets/linkCircle.png" width="0.5" height="0.5" position="1 1.24 0">
-                <a-animation attribute="opacity"
-                             dur="500"
-                             from="0"
-                             to="1"></a-animation>
+                <a-animation attribute="opacity" dur="500" from="0" to="1"></a-animation>
             </a-image>
             <!--X Y Z-->
-            <a-image id="display-Img" src="./assets/image.png" width="1" height="1" position="-1.12 0.5 0">
-                <a-animation attribute="opacity"
-                             dur="1000"
-                             from="0"
-                             to="1"></a-animation>
-                <a-animation attribute="position"
-                             dur="1000"
-                             from="0 0.5 0"
-                             to="-1.12 0.5 0"></a-animation>
+            <a-image id="display-Img" src="./assets/image.png" width="1" height="1" >
+                <a-animation attribute="opacity" dur="5000" from="0" to="1"></a-animation>
+                <a-animation attribute="position" dur="5000" from="0 0.5 0" to="-1.2 0.5 0"></a-animation>
             </a-image>
             <a-video src="./assets/videoGame.mp4" autoplay loop="true" width="1" height="1" position="-1.2 -0.5 0">
             </a-video>
-            
+
         </a-anchor>
         <!-- Define a static camera -->
         <a-camera-static />
