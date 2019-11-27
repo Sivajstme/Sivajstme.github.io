@@ -4,7 +4,7 @@
 <head>
 
     <script src="https://mnutsch.github.io/arjs_workshop/start/vendor/aframe/build/aframe.min.js"></script>
-
+    <script src="https://unpkg.com/aframe-animation-component@5.1.2/dist/aframe-animation-component.min.js"></script>
     <!-- include ar.js for aframe -->
     <script src='https://mnutsch.github.io/arjs_workshop/start/vendor/arjs/build/aframe-ar.js'></script>
     <script>ARjs.Context.baseURL = 'https://mnutsch.github.io/arjs_workshop/start/vendor/three.js/'</script>
@@ -30,12 +30,12 @@
 
         }
 /*
-        let box = document.querySelector('a-box');
-        box.addEventListener('click', function () {
-            box.setAttribute('color', 'green');
-        });
+                let box = document.querySelector('a-box');
+                box.addEventListener('click', function () {
+                    box.setAttribute('color', 'green');
+                });
 */
-        
+
     </script>
 
 </head>
@@ -55,82 +55,91 @@
         <!-- Declare assets for use in the scene. -->
         <a-assets timeout="1000">
             <!-- Declare assets here. These are things like images or 3D models. -->
-
             <!-- Example of how to declare a 3D model asset. -->
             <!--<a-asset-item id="3DModel-obj" src="3Dmodel.obj"></a-asset-item preload="auto">-->
             <!-- Example of how to declare a skin for a 3D model asset. -->
             <!--<a-asset-item id="3DModel-mtl" src="3DModel.mtl"></a-asset-item>-->
 
         </a-assets>
-        
+
         <!-- Create a anchor to attach your augmented reality -->
-        
+
         <a-anchor hit-testing-enabled='true'>
 
             <!-- Add your augmented reality items here -->
-
             <!-- example of basic text in 3D -->
             <!-- see: https://github.com/aframevr/aframe/blob/master/docs/components/text.md -->
             <!--<a-entity id="basicText" position='0 0 0' scale='1 1 1' color='red' text='value: Hello World;'></a-entity>-->
-
             <!-- example of a basic plane. -->
             <!-- see: https://aframe.io/docs/0.8.0 -->
             <!--<a-plane color="blue" height="1" width="1" rotation="-90 0 0"></a-plane>-->
-
             <!-- example of text fit onto a plane -->
             <!--
-        <a-plane
-        id = "helloWorldPlane"
-        geometry="primitive: plane; width: 1; height: 1; height: auto"
-        material="opacity: 0.5; color: white;"
-        position='0 0.25 3'>
-            <a-entity id="planeText" scale='2 2 2' text="value: Hello World;" align-"center"></a-entity>
-        </a-plane>
-        -->
-
+            <a-plane
+            id = "helloWorldPlane"
+            geometry="primitive: plane; width: 1; height: 1; height: auto"
+            material="opacity: 0.5; color: white;"
+            position='0 0.25 3'>
+                <a-entity id="planeText" scale='2 2 2' text="value: Hello World;" align-"center"></a-entity>
+            </a-plane>
+            -->
             <!-- Basic Box -->
-            <!-- see: https://aframe.io/docs/0.8.0 
+            <!-- see: https://aframe.io/docs/0.8.0
             <a-box emitevents="true" cursor="rayOrigin: touch" id="myBox" rotation="0 0 0" position='0 0.5 0' depth="1"
                 height="1" width="1" material='opacity: 0.5; side:double; color:blue;'></a-box>-->
-
             <!-- Basic Sphere -->
             <!-- see: https://aframe.io/docs/0.8.0/primitives/a-sphere.html -->
             <!--<a-sphere id="mySphere" position='0 0 0' color="yellow" radius="0.05"></a-sphere>-->
-
             <!-- 3D Model example -->
             <!-- see: https://aframe.io/docs/0.8.0/primitives/a-obj-model.html -->
             <!--<a-obj-model id="my3DModel" src="#3DModel-obj" position="0 0 0" rotation="0 0 0" scale=".1 .1 .1" material="opacity: 0.9; side:double; color: orange;"></a-obj-model>-->
             <!-- 3D Model example with skin -->
             <!--<a-obj-model id="my3DModel" src="#3DModel-obj" mtl="#3DModel-mtl" position="0 0 0" rotation="0 0 0" scale="1 1 1" material="opacity: 1.0; side:double;"></a-obj-model>
-                <a-sphere 
-                id="animated-model" scale="2" position="-2 1 0" color="white" radius= "0.15">
-                    <a-animation
-                        attribute = "color"
-                        dur = "10000"
-                        from = "white"
-                        to = "red"
-                        repeat = "indefinite"></a-animation>
+                            <a-sphere
+                            id="animated-model" scale="2" position="-2 1 0" color="white" radius= "0.15">
+                                <a-animation
+                                    attribute = "color"
+                                    dur = "10000"
+                                    from = "white"
+                                    to = "red"
+                                    repeat = "indefinite"></a-animation>
 
-<a-animation attribute="position" dur="4000" from="-1.5 0.8 0" to="-3.5 0.8 0"></a-animation>
+            <a-animation attribute="position" dur="4000" from="-1.5 0.8 0" to="-3.5 0.8 0"></a-animation>
 
-                </a-sphere>-->
+                            </a-sphere>-->
+
+            <a-plane src="./assets/texture.jpg" height="1" width="2" color="grey" position="0.3 0.5 0">
+                <a-text value="\n\n Siva Sunkara  - Graduate Developer \n\n(WebVR and WebAR) \n\n shivajstme@gamil.com \n\n Ph: 0468357759\n\n Melbourne AU"
+                        position="-1 0.1 0"
+                        height="1"
+                        width="2"
+                        color="white"></a-text>
+            </a-plane>
+            <a-image id="display-Img" src="./assets/linkCircle.png" width="0.5" height="0.5" position="1 1.24 0">
+                <a-animation attribute="opacity"
+                             dur="5000"
+                             from="0"
+                             to="1"></a-animation>
+            </a-image>
+            <!--X Y Z-->
+            <a-image id="display-Img" src="./assets/image.png" width="1" height="1" position="-1.12 0.5 0">
+                <a-animation attribute="opacity"
+                             dur="10000"
+                             from="0"
+                             to="1"></a-animation>
+                <a-animation attribute="position"
+                             dur="10000"
+                             from="0 0.5 0"
+                             to="-1.12 0.5 0"></a-animation>
+            </a-image>
+            <a-video src="./assets/videoGame.mp4" autoplay loop="true" width="1" height="1" position="-1.2 -0.5 0">
+                <a-animation attribute="opacity"
+
+
+
+
+            </a-video>
             
-            <a-plane src = "./assets/texture.jpg" height="1" width="2" color="grey" position="-0.8 0.5 0">
-                    <a-text value="\n\n Siva Sunkara  - Graduate Developer \n\n(WebVR and WebAR) \n\n shivajstme@gamil.com \n\n Ph: 0468357759\n\n Melbourne AU" 
-                            position= "-1 0.1 0" 
-                            height="1"
-                            width = "2"
-                            color="white"> </a-text>
-                </a-plane>
-                <a-image id="display-Img" src = "./assets/img.JPG" width="1" height="1.5" position="-3.5 0.8 0">
-                <a-animation
-                    attribute="opacity"
-                    dur="4000"
-                    from ="0"
-                    to="1"></a-animation>
-                </a-image>
-                <a-video src="./assets/videoGame.mp4"  autoplay loop="true" width = "2" height = "2" position="-3.5 -1 0"></a-video>
-                </a-entity>
         </a-anchor>
         <!-- Define a static camera -->
         <a-camera-static />
